@@ -1,0 +1,93 @@
+html,
+body {
+  margin: 0px;
+  overflow: hidden;
+  color: white;
+}
+html * {
+  font-family: "Oswald", sans-serif !important;
+  background: black;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+
+}
+
+form {
+  position: fixed;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items:center;
+  text-align: center;
+  margin-bottom: 2em;
+  bottom: 2em;
+  left: 50%;
+  transform: translate(-50%, 0);
+  background: none;
+  z-index:10;
+}
+#name-form,
+#submit {
+  font-size: 1.5em;
+  padding: 10px;
+  color: white;
+  z-index:10;
+  border: white solid 1px;
+  border-radius: 5px;
+}
+#name-form {
+  width: 50vw;
+  text-align: center;
+  text-transform: capitalize;
+
+
+}
+#name-form::placeholder {
+  color: grey;
+  text-align: center;
+}
+#submit {
+  margin-top: 1em;
+  padding-left: 1.5em;
+  padding-right: 1.5em;
+  background: grey;
+  cursor: pointer;
+}
+
+#clue {
+  position: fixed;
+  text-align: center;
+  top: 90%;
+  left: 50%;
+  transform: translate(-50%, -90%);
+  display: none;
+  font-size: 2em;
+  background: none;
+  z-index:10;
+}
+span {
+  background: none;
+}
+p {
+  position: fixed;
+  text-align: center;
+  top: 5%;
+  width: 100%;
+  margin: auto;
+  font-size: 5em;
+  background: none;
+  z-index:10;
+}
+
+
+.marquee {
+  position: fixed;
+  color: rgba(255, 255, 255, 0.2);
+  background:none;
+  text-align: justify;
+  text-justify: inter-word;
+  
+}
