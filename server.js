@@ -29,7 +29,7 @@ master.on("connection", function(socket) {
                 //remove no name client
                 for (let i = 0; i < group1_array.length; i++) {
                     console.log("Group1: ", group1_array[i][1]);
-                    if (group1_array[i][1] == "no name") {
+                    if (group1_array[i][1] === null) {
                         group1_array.splice(i, 1);
                     }
                 }
@@ -128,7 +128,7 @@ master.on("connection", function(socket) {
             else if (g == 1) {
                 //remove no name client
                 for (let i = 0; i < group2_array.length; i++) {
-                    if (group2_array[i][1] == "no name") {
+                    if (group2_array[i][1] === null) {
                         group2_array.splice(i, 1);
                     }
                 }
@@ -237,8 +237,9 @@ let group1_array = [];
 let group1 = io.of("/group1");
 // Listen for player clients to connect
 group1.on("connection", function(socket) {
-    group1_array.push([socket, "no name", Math.round(Math.random() * 100)]); // 2D array containing the socket and its associated user name, number
-
+    group1_array.push([socket, null, Math.round(Math.random() * 100)]); // 2D array containing the socket and its associated user name, number
+    //Send back the number of groupmates
+    group1.emit("total", group1_array.length);
     //Listen for name submission and set name
     socket.on("user name 1", function(userName) {
         for (let i = 0; i < group1_array.length; i++) {
@@ -248,8 +249,11 @@ group1.on("connection", function(socket) {
                     name: group1_array[i][1],
                     number: group1_array[i][2]
                 });
+
             }
+
         }
+        group1.emit("ready", countName(group1_array));
     });
 
     //Listen for mouse position update and send back to the group
@@ -272,7 +276,11 @@ group1.on("connection", function(socket) {
             if (group1_array[s][0].id == socket.id) {
                 group1_array.splice(s, 1);
             }
+
         }
+        group1.emit("total", group1_array.length);
+        group1.emit("ready", countName(group1_array));
+
     });
 });
 
@@ -281,8 +289,9 @@ let group2_array = [];
 let group2 = io.of("/group2");
 // Listen for player clients to connect
 group2.on("connection", function(socket) {
-    group2_array.push([socket, "no name", Math.round(Math.random() * 100)]); // 2D array containing the socket and its associated user name, number
-
+    group2_array.push([socket, null, Math.round(Math.random() * 100)]); // 2D array containing the socket and its associated user name, number
+    //Send back the number of groupmates
+    group2.emit("total", group2_array.length);
     //Listen for name submission and set name
     socket.on("user name 2", function(userName) {
         for (let i = 0; i < group2_array.length; i++) {
@@ -293,7 +302,9 @@ group2.on("connection", function(socket) {
                     number: group2_array[i][2]
                 });
             }
+
         }
+        group2.emit("ready", countName(group2_array));
     });
 
     //Listen for mouse position update and send back to the group
@@ -310,16 +321,19 @@ group2.on("connection", function(socket) {
     // Tell all of the audience clients this client disconnected
     socket.on("disconnect", function() {
         io.sockets.emit("disconnected", socket.id);
-
         // Remove socket
         for (let s = 0; s < group2_array.length; s++) {
             if (group2_array[s][0].id == socket.id) {
                 group2_array.splice(s, 1);
             }
+
         }
+        group2.emit("total", group2_array.length);
+        group2.emit("ready", countName(group2_array));
     });
 });
 
+//Shuffle array function, simple, return a shuffled array
 function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * i);
@@ -328,4 +342,15 @@ function shuffle(array) {
         array[j] = temp;
     }
     return array.splice(array);
+}
+
+//Count number of ready users in each group
+function countName(array) {
+    let noName = 0;
+    for (let i = 0; i < array.length; i++) {
+        if (array[i][1] === null) {
+            noName++;
+        }
+    }
+    return array.length - noName;
 }

@@ -49,7 +49,7 @@ function updateMarquee() {
             ",0.35)";
     }
 }
-var updateInterval = setInterval(updateMarquee, 40);
+var updateInterval = setInterval(updateMarquee, 250);
 
 let nameForm = document.forms[0];
 let nameInput = nameForm.elements["name"];
@@ -76,6 +76,14 @@ nameForm.onsubmit = function(event) {
     $("p")[0].innerHTML += "<br>Waiting for Other Teammates..."
 };
 
+//Receive number of total and ready users
+socket.on("total", function(data) {
+    $("#total").html(data.toString());
+});
+socket.on("ready", function(data) {
+    $("#ready").html(data.toString());
+});
+
 let name1, number1, name2, number2;
 
 //Receive clue
@@ -101,9 +109,16 @@ socket.on("clue2", function(data) {
         $("#number2").html(number2);
     }
 });
+var myFont;
+
+function preload() {
+    myFont = loadFont('../Oswald-Medium.ttf');
+
+}
 
 function setup() {
     createCanvas(windowWidth, windowHeight);
+    textFont(myFont);
 }
 
 let x, y;
@@ -129,7 +144,8 @@ socket.on("update", function(data) {
 socket.on("done", function() {
     waiting = false;
     //lineup now
-    $(".marquee").css("display", "none");
+
+    $(".marquee,#number-user").css("display", "none");
     $("p")[0].innerHTML = "Line Up, Now!"
     socket.emit("mouseDragged", {
         userName: userName,

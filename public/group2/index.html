@@ -1,52 +1,47 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <script type="text/javascript" src="/socket.io/socket.io.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.11/p5.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.11/addons/p5.dom.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.11/addons/p5.sound.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Oswald&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="style.css" />
-    <script
-      src="https://code.jquery.com/jquery-3.4.1.min.js"
-      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-      crossorigin="anonymous"
-    ></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 
-    <title>Group 2</title>
+    <title>Line Up - Group 2</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  </head>
-  <body>
+</head>
+
+<body>
     <p>
-      Line Up - Group 2
+        Line Up - Group 2
     </p>
     <form>
-      <input
-        id="name-form"
-        name="name"
-        type="text"
-        maxlength="100"
-        placeholder="Input your name"
-        aria-labelledby="submit-name"
-      />
-      <button type="submit" id="submit">Submit</button>
+        <input id="name-form" name="name" type="text" maxlength="100" placeholder="Input your name" aria-labelledby="submit-name" />
+        <button type="submit" id="submit">Submit</button>
     </form>
-    
+    <div id="number-user">Players:
+        <div id="ready">-</div>/
+        <div id="total">-</div> (ready/total)</div>
+
     <div id="clue">
-      <span id="name1">
+        <span id="name1">
         
       </span>
-      <span id="number1">
+        <span id="number1">
         
       </span>
-      <br>
-      <span id="name2">
+        <br>
+        <span id="name2">
         
       </span>
-      <span id="number2">
+        <span id="number2">
         
       </span>
     </div>
     <script src="sketch.js"></script>
-  </body>
+</body>
+
 </html>

@@ -77,6 +77,14 @@ nameForm.onsubmit = function(event) {
 
 };
 
+//Receive number of total and ready users
+socket.on("total", function(data) {
+    console.log(data);
+    $("#total").html(data.toString());
+});
+socket.on("ready", function(data) {
+    $("#ready").html(data.toString());
+});
 let name1, number1, name2, number2;
 
 //Receive clue
@@ -102,14 +110,16 @@ socket.on("clue2", function(data) {
         $("#name2").html(name2);
         $("#number2").html(number2);
     }
-
-
 });
+var myFont;
+
+function preload() {
+    myFont = loadFont('../Oswald-Medium.ttf');
+}
 
 function setup() {
-    // myFont = loadFont("https://cdn.glitch.com/62bbae8f-1402-4417-b5af-d20bdb643775%2FOswald-Medium.ttf?v=1576039122254");
     createCanvas(windowWidth, windowHeight);
-    // textFont(myFont,20);
+    textFont(myFont);
 }
 
 let x, y;
@@ -135,7 +145,7 @@ socket.on("update", function(data) {
 socket.on("done", function() {
     waiting = false;
     //lineup now
-    $(".marquee").css("display", "none");
+    $(".marquee,#number-user").css("display", "none");
     $("p")[0].innerHTML = "Line Up, Now!"
     socket.emit("mouseDragged", {
         userName: userName,
