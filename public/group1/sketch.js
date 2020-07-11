@@ -66,7 +66,13 @@ nameForm.onsubmit = function(event) {
         return;
     }
     socket.emit("user name 1", userName);
-
+};
+//Receive name duplicate message
+socket.on("duplicate", function() {
+    alert("Name taken by someone else. Please choose another name of yours");
+});
+//Receive confirmation that name is succesfully received
+socket.on("new name 1", function() {
     // turn off form
     $("#name-form").css("display", "none");
     $("#submit").css("display", "none");
@@ -74,8 +80,7 @@ nameForm.onsubmit = function(event) {
     clearInterval(updateInterval);
     //waiting:
     $("p")[0].innerHTML += "<br>Waiting for Other Teammates..."
-
-};
+});
 
 //Receive number of total and ready users
 socket.on("total", function(data) {

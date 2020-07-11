@@ -1,7 +1,6 @@
 html,
 body {
     margin: 0px;
-    overflow: hidden;
 }
 
 html * {
@@ -17,7 +16,7 @@ html * {
 
 #start-button {
     text-align: center;
-    font-size: 10vw;
+    font-size: 5vw;
     background: rgb(255, 50, 50);
     padding-left: 2vw;
     padding-right: 2vw;
@@ -25,6 +24,7 @@ html * {
     opacity: 0.75;
     margin: auto;
     cursor: pointer;
+    border: solid white;
 }
 
 #start-button:hover {
@@ -35,12 +35,23 @@ html * {
     display: flex;
     flex-direction: row;
     justify-content: center;
+    overflow-y: visible;
 }
 
 #group-wrapper>div {
     margin: 1em 3em;
+    display: flex;
+    flex-direction: column;
+    justify-content: star;
+    align-items: center;
 }
 
 p {
     font-size: 2em;
+    margin-bottom: 0;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
 }

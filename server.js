@@ -28,7 +28,6 @@ master.on("connection", function(socket) {
             if (g == 0) {
                 //remove no name client
                 for (let i = 0; i < group1_array.length; i++) {
-                    console.log("Group1: ", group1_array[i][1]);
                     if (group1_array[i][1] === null) {
                         group1_array.splice(i, 1);
                     }
@@ -39,7 +38,7 @@ master.on("connection", function(socket) {
                 for (let j = 0; j < group1_array.length; j++) {
                     randomArray[j] = j;
                 }
-                console.log("Group1: randomArray", randomArray);
+
                 var shuffledArray = shuffle(randomArray);
 
                 //Making sure the shuffled array doesnt have element that is in the same position
@@ -59,7 +58,7 @@ master.on("connection", function(socket) {
                         flag = false;
                     }
                 }
-                console.log("Group1: shuffledArray", shuffledArray);
+
 
                 //Assign each person the first user
                 //group1_array = [["self A","self number A",["person B","number B"]],...]
@@ -137,7 +136,6 @@ master.on("connection", function(socket) {
                 for (let j = 0; j < group2_array.length; j++) {
                     randomArray[j] = j;
                 }
-                console.log("Group2: randomArray", randomArray);
                 var shuffledArray = shuffle(randomArray);
                 //Making sure the shuffled array doesnt have element that is in the same position
                 let flag = true;
@@ -155,7 +153,6 @@ master.on("connection", function(socket) {
                         flag = false;
                     }
                 }
-                console.log("Group2: shuffledArray", shuffledArray);
 
                 //Assign each person the first user
                 for (let i = 0; i < group2_array.length; i++) {
@@ -242,9 +239,19 @@ group1.on("connection", function(socket) {
     group1.emit("total", group1_array.length);
     //Listen for name submission and set name
     socket.on("user name 1", function(userName) {
+        userName = userName.toLowerCase();
+        //Check if matched with exsiting name and prompt a rename
         for (let i = 0; i < group1_array.length; i++) {
+            if (group1_array[i][1] != null && userName == group1_array[i][1]) {
+                socket.emit("duplicate");
+                return;
+            }
+        }
+        for (let i = 0; i < group1_array.length; i++) {
+            //Check if matched socket id
             if (group1_array[i][0].id == socket.id) {
                 group1_array[i][1] = userName;
+                socket.emit("new name 1");
                 master.emit("new name 1", {
                     name: group1_array[i][1],
                     number: group1_array[i][2]
@@ -293,10 +300,21 @@ group2.on("connection", function(socket) {
     //Send back the number of groupmates
     group2.emit("total", group2_array.length);
     //Listen for name submission and set name
+
     socket.on("user name 2", function(userName) {
+        userName = userName.toLowerCase();
+        //Check if matched with exsiting name and prompt a rename
+        for (let i = 0; i < group2_array.length; i++) {
+            if (group2_array[i][1] != null && userName == group2_array[i][1]) {
+                socket.emit("duplicate");
+                return;
+            }
+        }
+        //Check if matched id
         for (let i = 0; i < group2_array.length; i++) {
             if (group2_array[i][0].id == socket.id) {
                 group2_array[i][1] = userName;
+                socket.emit("new name 2");
                 master.emit("new name 2", {
                     name: group2_array[i][1],
                     number: group2_array[i][2]

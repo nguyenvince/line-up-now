@@ -12,7 +12,6 @@ let tmp2 = [];
 let startButton = document.getElementById("start-button");
 
 function setup() {
-
     //send start message to server
     startButton.addEventListener("click", function() {
         socket.emit("start");
@@ -63,12 +62,19 @@ function setup() {
     socket.on("done", function() {
         $("#group1,#group2").html("");
         $("#group1,#group2").append("<ul></ul>");
+        //Sort the arrays by numbers
+        group1_array.sort(function(a, b) {
+            return a[1] - b[1];
+        });
+        group2_array.sort(function(a, b) {
+            return a[1] - b[1];
+        });
         for (let i = 0; i < group1_array.length; i++) {
-            let item = group1_array[i][0] + " " + group1_array[i][1].toString(); //concaternate name and number
+            let item = group1_array[i][0] + ": " + group1_array[i][1].toString(); //concaternate name and number
             $("#group1 ul").append("<li>" + item + "</li>")
         }
         for (let i = 0; i < group2_array.length; i++) {
-            let item = group2_array[i][0] + group2_array[i][1].toString(); //concaternate name and number
+            let item = group2_array[i][0] + ": " + group2_array[i][1].toString(); //concaternate name and number
             $("#group2 ul").append("<li>" + item + "</li>")
         }
 
