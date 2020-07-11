@@ -151,7 +151,7 @@ socket.on("done", function() {
     waiting = false;
     //lineup now
     $(".marquee,#number-user").css("display", "none");
-    $("p")[0].innerHTML = "Line Up, Now!"
+    $("p")[0].innerHTML = "line up, now!"
     socket.emit("mouseDragged", {
         userName: userName,
         x: Math.random(),
