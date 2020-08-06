@@ -79,7 +79,7 @@ socket.on("new name 2", function() {
     //clear interval
     clearInterval(updateInterval);
     //waiting:
-    $("p")[0].innerHTML += "<br>Waiting for Other Teammates..."
+    $("p")[0].innerHTML += "<br>waiting for other teammates..."
 });
 
 //Receive number of total and ready users
